@@ -1,4 +1,4 @@
-@extends('layouts.thing')
+@extends('layouts.lte')
 
 @section('title', 'Page Title')
 
@@ -17,12 +17,16 @@
 
 @section('content')
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Movimenti</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
+    <section class="content-header">
+        <h1>
+            Movimenti
+            <small>Archivio uscite</small>
+        </h1>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
 
     <div class="row">
         <div class="col-md-12">
@@ -37,15 +41,20 @@
             <table class="table table-striped table-bordered table-hover" id="EntryTable">
                 <thead>
                 <tr>
-                    <th>Reason</th>
-                    <th>Amount</th>
+                    <th>Data</th>
+                    <th>Causale</th>
+                    <th>Importo</th>
+                    <th>File</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($entries as $entry)
                     <tr>
+                        <td>{{date('d/m/Y', strtotime($entry->created_at))}}</td>
                         <td>{{$entry->reason}}</td>
-                        <td>{{$entry->amount}}</td>
+                        <td>{{number_format($entry->amount, 2, '.', '')}}</td>
+                        <td>@if($entry->filepath)<a href="/entry/getdoc/{{$entry->id}}"><i class="fa fa-file-pdf-o"></i></a>@endif
+                        <a href="/entry/delete/{{$entry->id}}"><i class="fa fa-trash"></i></a></td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -58,6 +67,7 @@
 
         </div>
     </div>
+        </section>
 
 @endsection
 

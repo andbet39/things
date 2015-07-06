@@ -240,7 +240,13 @@
                     <li><a href="/pages/#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="/pages/login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li>
+                        @if(Auth::check())
+                            <a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        @else
+                            <a href="/auth/login"><i class="fa fa-sign-out fa-fw"></i> Login</a>
+                        @endif
+
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -265,6 +271,32 @@
                     </li>
                     <li>
                        <a href="/admin/pages/index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/category"><i class="fa fa-wrench fa-fw"></i> Categorie<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/category">Visualizza</a>
+                            </li>
+                            <li>
+                                <a href="/category/create">Crea</a>
+                            </li>
+
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="/entry"><i class="fa fa-wrench fa-fw"></i> Spese<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/entry">Visualizza</a>
+                            </li>
+                            <li>
+                                <a href="/entry/create">Crea</a>
+                            </li>
+
+                        </ul>
+                        <!-- /.nav-second-level -->
                     </li>
                     <li>
                        <a href="/admin/pages/#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
@@ -375,7 +407,7 @@
 <script src="/admin/bower_components/morrisjs/morris.min.js"></script>
 <script src="/admin/js/morris-data.js"></script>
 
-
+-->
 @yield('footer')
 
 

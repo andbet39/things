@@ -26,6 +26,7 @@ $factory->define(App\Entry::class, function ($faker) {
         'reason' => $faker->sentence($nbWords = 6),  // 'Sit vitae voluptas sint non voluptates.',
         'amount' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 10000),
         'paid' => $faker->boolean(),
+        'user_id'=> 1,
         'created_at' =>  $faker->dateTimeThisYear($max = 'now'),
         'updated_at' =>  $faker->dateTimeThisYear($max = 'now')
     ];
