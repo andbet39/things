@@ -15,25 +15,14 @@
 @section('content')
 
     <div ng-app="taskApp">
-        <section class="content-header">
-            <h1>
-                Tasks
-            </h1>
-
-        </section>
-
-        <!-- Main content -->
+                <!-- Main content -->
         <section class="content" ng-controller="taskController">
 
             <div class="row">
                 <div class="col-md-8">
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Tasks
-                        </div>
-
-                        <div class="panel-body">
+                    <div class="box box-warning">
+                                              <div class="box-body">
                             <div class="dataTable_wrapper">
                                 <table class="table table-striped table-bordered table-hover" id="EntryTable">
                                     <thead>
@@ -47,12 +36,12 @@
                                     <tbody>
                                     <tr ng-repeat="task in tasks">
                                         <td><% task.name %></td>
-                                        <td><% task.due_date %></td>
+                                        <td><% task.due_date | date:'dd-MM-yyyy' %></td>
                                         <td><% task.assigned.name %></td>
                                         <td>
                                             <button ng-click="delete($index)" class="btn btn-danger"><i
                                                         class="fa fa-trash"></i></button>
-                                            <button ng-click="select($index)" class="btn btn-danger"><i
+                                            <button ng-click="select($index)" class="btn btn-success"><i
                                                         class="fa fa-edit"></i></button>
                                         </td>
                                     </tr>
@@ -63,11 +52,11 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Crea nuovo Task
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h4>Crea nuovo Task</h4>
                         </div>
-                        <div class="panel-body">
+                        <div class="box-body">
                                 <input type="hidden" name='owner_id' ng-model="selected.owner.id" value="{{Auth::User()->id}}">
                                 <fieldset>
                                     <div class="form-group">
@@ -75,16 +64,18 @@
                                         <input type="text" name="name" class="form-control" ng-model="selected.name">
                                     </div>
                                     <div class="form-group">
-                                        <p class="input-group">
+                                        <label>Due Date</label>
+                                        <div class="input-group">
+
                                             <input type="text" class="form-control" datepicker-popup="<%format%>" ng-model="selected.due_date" is-open="opened"  datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-                                        </p>
+                                                  <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                  </span>
+                                        </div>
                                     </div>
                                     <div class="form-group" id="div_assigned_id">
                                         <label class="control-label " for="assigned_id">
-                                            Assign to
+                                            Assign to <% selected.assigned.name %>
                                         </label>
 
                                         <div class="controls ">
@@ -99,8 +90,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <button ng-click="save()"  class="btn btn-success">Update</button>
-                                    <button ng-click="nuovo()" class="btn btn-success">Clear</button>
+                                    <button ng-click="save()"  class="btn btn-success">Save</button>
                                 </fieldset>
                         </div>
                     </div>

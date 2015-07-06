@@ -31,3 +31,12 @@ $factory->define(App\Entry::class, function ($faker) {
         'updated_at' =>  $faker->dateTimeThisYear($max = 'now')
     ];
 });
+
+
+$factory->define(App\User::class, function ($faker) {
+    return [
+        'name' => $faker->name(),  // 'Sit vitae voluptas sint non voluptates.',
+        'email' => $faker->email(),
+        'password' => $faker->password(),
+        ];
+});

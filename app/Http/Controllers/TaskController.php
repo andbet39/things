@@ -70,6 +70,18 @@ class TaskController extends Controller
         Task::create($task);
         return 'success';
     }
+    public function apitasksPut($id){
+
+        $task = Task::find($id);
+
+        $task->assigned_id=Request::input('assigned_id');
+        $task->name=Request::input('name');
+        $task->due_date=Request::input('due_date');
+
+        $task->save();
+
+        return $task;
+    }
 
     public function apiUsers()
     {

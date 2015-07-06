@@ -56,5 +56,6 @@ Route::post('/task/store','TaskController@store');
 Route::get('/angular/task','TaskController@angularTask');
 Route::get('/api/tasks','TaskController@apitasks');
 Route::post('/api/task','TaskController@apitasksPost');
+Route::put('/api/task/{id}','TaskController@apitasksPut');
 Route::delete('/api/task/{id}','TaskController@apitaskDelete');
 Route::get('/api/users','TaskController@apiUsers');

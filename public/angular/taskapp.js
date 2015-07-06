@@ -10,7 +10,9 @@ app.controller('taskController', function($scope, $http) {
 
     $scope.tasks = [];
     $scope.users =[];
-    $scope.selected={name:"",due_date:"",assigne:{}};
+    $scope.selected={name:"",due_date:"",assigned:{},owner:{}};
+    $scope.selected_idx;
+
 
     $scope.loading = false;
 
@@ -36,21 +38,41 @@ app.controller('taskController', function($scope, $http) {
     $scope.select =function(index){
 
         $scope.selected= $scope.tasks[index];
-
+        $scope.selected_idx=index;
     };
     $scope.nuovo = function(){
         $scope.selected={};
     };
 
     $scope.save = function(){
-      $http.post('/api/task',$scope.selected).success(function(){
+        if(!$scope.selected.id) {
+            $http.post('/api/task', $scope.selected).success(function () {
+
+                var $newTask = angular.copy($scope.selected);
+
+                $scope.users.forEach(function(user){
+                    if($newTask.assigned_id==user.id){
+                        $newTask.assigned=$scope.users[$newTask.assigned_id]= user;
+                    }
+                });
 
 
-          $scope.tasks.push($scope.selected);
+                $scope.tasks.push($newTask);
 
-      });
+            });
+        }else{//UPDATE
+            $http.put('/api/task/'+$scope.selected.id, $scope.selected).success(function () {
+                $scope.users.forEach(function(user){
+                  if($scope.selected.assigned_id==user.id){
+                      $scope.selected.assigned = user;
+                  }
+                });
 
+                $scope.tasks[$scope.seleceted_idx] = angular.copy($scope.selected);
+                $scope.selected={};
 
+            });
+        }
     };
 
 
