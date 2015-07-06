@@ -28,11 +28,19 @@ app.controller('taskController', function($scope, $http) {
                 $scope.tasks = data;
                 $scope.loading = false;
 
-            });
-        $http.get('/api/users').success(function(data){
-           $scope.users = data;
+                $http.get('/api/users').success(function(data){
+                    $scope.users = data;
 
-        });
+                    $http.get('/api/loggedUser').success(function(data){
+
+                        $scope.loggedUser = data;
+                        $scope.updateCounter();
+
+                    });
+                });
+
+            });
+
     };
 
     $scope.select =function(index){
@@ -58,10 +66,13 @@ app.controller('taskController', function($scope, $http) {
 
 
                 $scope.tasks.push($newTask);
+                $scope.updateCounter();
 
             });
         }else{//UPDATE
             $http.put('/api/task/'+$scope.selected.id, $scope.selected).success(function () {
+
+                $scope.selected.assigned={};
                 $scope.users.forEach(function(user){
                   if($scope.selected.assigned_id==user.id){
                       $scope.selected.assigned = user;
@@ -70,6 +81,7 @@ app.controller('taskController', function($scope, $http) {
 
                 $scope.tasks[$scope.seleceted_idx] = angular.copy($scope.selected);
                 $scope.selected={};
+                $scope.updateCounter();
 
             });
         }
@@ -83,6 +95,7 @@ app.controller('taskController', function($scope, $http) {
         $http.delete('/api/task/'+ task.id).
             success(function(){
                 $scope.tasks.splice(index,1);
+                $scope.updateCounter();
             });
 
     };
@@ -104,6 +117,31 @@ app.controller('taskController', function($scope, $http) {
         startingDay: 1
     };
 
+    $scope.total=0;
+    $scope.completed=0;
+    $scope.assigned_to_me=0;
+    $scope.assigned=0;
+    $scope.unassigned=0;
+
+   $scope.updateCounter = function(){
+
+       $scope.total=0;
+       $scope.completed=0;
+       $scope.assigned_to_me=0;
+       $scope.assigned=0;
+       $scope.unassigned=0;
+
+       console.log($scope.tasks.length);
+        $scope.total = $scope.tasks.length;
+
+       for(i=0;i<$scope.tasks.length;i++){
+            if($scope.tasks[i].is_done)$scope.completed +=1;
+            if(!$scope.tasks[i].assigned_id)$scope.unassigned +=1;
+           if($scope.tasks[i].assigned_id == $scope.loggedUser.id)$scope.assigned_to_me +=1;
+           if($scope.tasks[i].assigned_id)$scope.assigned +=1;
+
+        };
+    }
 
 
 });

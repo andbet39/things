@@ -21,7 +21,13 @@
             <div class="row">
                 <div class="col-md-8">
 
-                    <div class="box box-warning">
+                    <div class="box box-warning"><div class="box-heading">
+                            Total <% total %>
+                            Assigned <% assigned %>
+                            Assigned-to-me <% assigned_to_me %>
+                            Unassigned <% unassigned %>
+                            Completed <% completed %>
+                        </div>
                                               <div class="box-body">
                             <div class="dataTable_wrapper">
                                 <table class="table table-striped table-bordered table-hover" id="EntryTable">

@@ -9,6 +9,8 @@ use Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class TaskController extends Controller
 {
@@ -87,6 +89,10 @@ class TaskController extends Controller
     {
         return User::all();
 
+    }
+
+    public function loggedUser(){
+        return Auth::user();
     }
 
 }
