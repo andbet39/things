@@ -4,7 +4,9 @@
 
 @section('head')
     <link rel="stylesheet" href="/lib/angular-bootstrap/ui-bootstrap-csp.css"/>
-
+    <link rel="stylesheet" href="/lte/plugins/iCheck/all.css"/>
+    <link rel="stylesheet" href="/lte/plugins/iCheck/minimal/minimal.css"/>
+    <link rel="stylesheet" href="/lte/plugins/iCheck/flat/flat.css"/>
 @endsection
 
 @section('sidebar')
@@ -33,6 +35,7 @@
                                 <table class="table table-striped table-bordered table-hover" id="EntryTable">
                                     <thead>
                                     <tr>
+                                        <th>Done</th>
                                         <th>Name</th>
                                         <th>Due Date</th>
                                         <th>Assigned To</th>
@@ -41,6 +44,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="task in tasks">
+                                        <td><input type="checkbox" icheck ng-model="task.is_completed" ng-change="setdone($index)"></td>
                                         <td><% task.name %></td>
                                         <td><% task.due_date | date:'dd-MM-yyyy' %></td>
                                         <td><% task.assigned.name %></td>
@@ -114,6 +118,7 @@
     <script type="text/javascript" src="/lib/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="/lib/angular-bootstrap/ui-bootstrap.js"></script>
     <script type="text/javascript" src="/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/lte/plugins/iCheck/icheck.js"></script>
 
 
 

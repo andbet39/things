@@ -79,6 +79,7 @@ class TaskController extends Controller
         $task->assigned_id=Request::input('assigned_id');
         $task->name=Request::input('name');
         $task->due_date=Request::input('due_date');
+        $task->is_completed=Request::input('is_completed');
 
         $task->save();
 

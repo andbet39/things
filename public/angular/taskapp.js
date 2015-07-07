@@ -6,6 +6,41 @@ var app = angular.module('taskApp', ['ui.bootstrap'], function($interpolateProvi
     $interpolateProvider.endSymbol('%>');
 });
 
+app.directive('icheck', function($timeout, $parse) {
+    return {
+        require: 'ngModel',
+        link: function($scope, element, $attrs, ngModel) {
+            return $timeout(function() {
+                var value = $attrs['value'];
+                $scope.$watch($attrs['ngModel'], function(newValue){
+                    $(element).iCheck('update');
+                });
+
+                $scope.$watch($attrs['ngDisabled'], function(newValue) {
+                    $(element).iCheck(newValue ? 'disable':'enable');
+                    $(element).iCheck('update');
+                });
+
+                return $(element).iCheck({
+                    checkboxClass: 'icheckbox_minimal',
+                    radioClass: 'iradio_minimal'
+                }).on('ifToggled', function(event) {
+                    if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
+                        $scope.$apply(function() {
+                            return ngModel.$setViewValue(event.target.checked);
+                        });
+                    }
+                    if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
+                        return $scope.$apply(function() {
+                            return ngModel.$setViewValue(value);
+                        });
+                    }
+                });
+            },300);
+        }
+    };
+});
+
 app.controller('taskController', function($scope, $http) {
 
     $scope.tasks = [];
@@ -42,6 +77,16 @@ app.controller('taskController', function($scope, $http) {
             });
 
     };
+
+    $scope.setdone= function (index){
+
+        $http.put('/api/task/'+$scope.tasks[index].id, $scope.tasks[index]).success(function () {
+
+            $scope.updateCounter();
+
+        });
+        console.log($scope.tasks[index]);
+    }
 
     $scope.select =function(index){
 
@@ -135,7 +180,7 @@ app.controller('taskController', function($scope, $http) {
         $scope.total = $scope.tasks.length;
 
        for(i=0;i<$scope.tasks.length;i++){
-            if($scope.tasks[i].is_done)$scope.completed +=1;
+            if($scope.tasks[i].is_completed)$scope.completed +=1;
             if(!$scope.tasks[i].assigned_id)$scope.unassigned +=1;
            if($scope.tasks[i].assigned_id == $scope.loggedUser.id)$scope.assigned_to_me +=1;
            if($scope.tasks[i].assigned_id)$scope.assigned +=1;
