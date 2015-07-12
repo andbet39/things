@@ -69,8 +69,8 @@ class TaskController extends Controller
     public function apitasksPost(){
         $task=Request::all();
 
-        Task::create($task);
-        return 'success';
+        $newTask= Task::create($task);
+        return $newTask;
     }
     public function apitasksPut($id){
 

@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    Blade::setContentTags('[[',']]',true);        // for variables and all things Blade
+    Blade::setEscapedContentTags('[[[', ']]]',true);   // for escaped data
+
+    return view('spa/index');
 });
 
 Route::get('/post','PostController@index');

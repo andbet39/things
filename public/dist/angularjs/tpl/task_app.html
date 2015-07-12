@@ -1,0 +1,39 @@
+<!-- Breadcrumbs -->
+<div class="page-title" data-ng-include="'tpl/parts/breadcrumbs.html'"></div>
+<!-- /Breadcrumbs -->
+
+<!-- Stats Panels -->
+<div class="row">
+
+  <!-- ToDo Card -->
+  <div class="col l4 s12">
+    <div class="card">
+      <div class="title">
+        <h5>Todo</h5>
+        <a class="close" href="#">
+          <i class="mdi-content-clear"></i>
+        </a>
+        <a class="minimize" href="#">
+          <i class="mdi-navigation-expand-less"></i>
+        </a>
+      </div>
+
+      <div class="content todo-card">
+        <div class="todo-task" ng-repeat="task in tasks">
+          <input type="checkbox" id="checkbox{{$index}}" ng-if="task.is_completed" checked ng-click="setdone($index)"/>
+          <input type="checkbox" id="checkbox{{$index}}" ng-if="!task.is_completed"  ng-click="setdone($index)"/>
+          <label for="checkbox{{$index}}">{{task.name}} {{task.is_completed}}<span class="todo-remove mdi-action-delete" ng-click="delete($index)"></span></label>
+        </div>
+
+
+        <div class="input-field">
+          <input ng-keyup="$event.keyCode == 13 ? save() : null" ng-model="selected.name" id="task-add" type="text">
+          <label for="task-add">Add New</label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /ToDo Card -->
+
+</div>
