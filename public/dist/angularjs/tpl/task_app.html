@@ -2,11 +2,45 @@
 <div class="page-title" data-ng-include="'tpl/parts/breadcrumbs.html'"></div>
 <!-- /Breadcrumbs -->
 
+
+<div class="row">
+  <div class="col l3 s12">
+    <div class="card-panel stats-card blue blue-text text-lighten-5">
+      <i class="fa fa-comments-o"></i>
+      <span class="count">{{total}}</span>
+      <div class="name">Total</div>
+    </div>
+    </div>
+    <div class="col l3 s12">
+      <div class="card-panel stats-card blue blue-text text-lighten-5">
+        <i class="fa fa-comments-o"></i>
+        <span class="count">{{completed}}</span>
+        <div class="name">Completed</div>
+      </div>
+    </div>
+      <div class="col l3 s12">
+      <div class="card-panel stats-card blue blue-text text-lighten-5">
+        <i class="fa fa-comments-o"></i>
+        <span class="count">{{unassigned}}</span>
+        <div class="name">Unassigned</div>
+      </div>
+        </div>
+      <div class="col l3 s12">
+        <div class="card-panel stats-card blue blue-text text-lighten-5">
+          <i class="fa fa-comments-o"></i>
+          <span class="count">{{assigned_to_me}}</span>
+          <div class="name">Assigned to me</div>
+        </div>
+      </div>
+
+  </div>
+</div>
 <!-- Stats Panels -->
 <div class="row">
 
+
   <!-- ToDo Card -->
-  <div class="col l4 s12">
+  <div class="col l8 s12">
     <div class="card">
       <div class="title">
         <h5>Todo</h5>
@@ -22,7 +56,8 @@
         <div class="todo-task" ng-repeat="task in tasks">
           <input type="checkbox" id="checkbox{{$index}}" ng-if="task.is_completed" checked ng-click="setdone($index)"/>
           <input type="checkbox" id="checkbox{{$index}}" ng-if="!task.is_completed"  ng-click="setdone($index)"/>
-          <label for="checkbox{{$index}}">{{task.name}} {{task.is_completed}}<span class="todo-remove mdi-action-delete" ng-click="delete($index)"></span></label>
+          <label for="checkbox{{$index}}">{{task.name}} <span class="todo-duedate">{{task.due_date}}</span><span class="todo-remove mdi-action-delete" ng-click="delete($index)"></span></label>
+
         </div>
 
 

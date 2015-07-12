@@ -64,3 +64,13 @@ Route::post('/api/task','TaskController@apitasksPost');
 Route::put('/api/task/{id}','TaskController@apitasksPut');
 Route::delete('/api/task/{id}','TaskController@apitaskDelete');
 Route::get('/api/users','TaskController@apiUsers');
+
+
+Route::group(['prefix' => 'api'], function()
+{
+    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+    Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+
+});
+

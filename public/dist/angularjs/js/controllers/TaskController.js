@@ -1,13 +1,7 @@
 conAngular.controller('TaskController', function($rootScope, $scope, $http, $timeout, $interval) {
 
-  // toast
-  $timeout(function() {
-    Materialize.toast('Welcome to Con!', 1000);
-  }, 1000);
-
 
   $scope.tasks = [];
-  $scope.users =[];
   $scope.selected={name:"",due_date:"",assigned:{},owner:{}};
   $scope.selected_idx;
 
@@ -26,19 +20,8 @@ conAngular.controller('TaskController', function($rootScope, $scope, $http, $tim
           $scope.tasks = data;
           $scope.loading = false;
 
-          $scope.loggedUser = data;
           $scope.updateCounter();
 
-         /* $http.get('/api/users').success(function(data){
-            $scope.users = data;
-
-            $http.get('/api/loggedUser').success(function(data){
-
-
-
-            });
-          });
-        */
         });
 
   };
@@ -72,12 +55,7 @@ conAngular.controller('TaskController', function($rootScope, $scope, $http, $tim
         var $newTask = angular.copy(data);
 
         console.log(data);
-        /*$scope.users.forEach(function(user){
-          if($newTask.assigned_id==user.id){
-            $newTask.assigned=$scope.users[$newTask.assigned_id]= user;
-          }
-        });
-*/
+
         $scope.selected={};
         $scope.tasks.push($newTask);
         $scope.updateCounter();
@@ -103,7 +81,7 @@ conAngular.controller('TaskController', function($rootScope, $scope, $http, $tim
 
   $scope.total=0;
   $scope.completed=0;
-  $scope.assigned_to_me=0;
+    $scope.assigned_to_me=0;
   $scope.assigned=0;
   $scope.unassigned=0;
 
@@ -121,7 +99,7 @@ conAngular.controller('TaskController', function($rootScope, $scope, $http, $tim
     for(i=0;i<$scope.tasks.length;i++){
       if($scope.tasks[i].is_completed)$scope.completed +=1;
       if(!$scope.tasks[i].assigned_id)$scope.unassigned +=1;
-      if($scope.tasks[i].assigned_id == $scope.loggedUser.id)$scope.assigned_to_me +=1;
+      if($scope.tasks[i].assigned_id == $rootScope.currentUser.id)$scope.assigned_to_me +=1;
       if($scope.tasks[i].assigned_id)$scope.assigned +=1;
 
     };

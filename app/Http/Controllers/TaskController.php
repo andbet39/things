@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+
+
+    public function __construct()
+    {
+          $this->middleware('jwt.auth', ['except' => ['index']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
